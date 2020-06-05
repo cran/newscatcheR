@@ -321,157 +321,172 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <div id="get_news" class="section level3">
 <h3>get_news()</h3>
 <p>The first function <code>get_news()</code> returns a tibble of the rss feed of a given site.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">get_news</span>(<span class="dt">website =</span> <span class="st">&quot;news.ycombinator.com&quot;</span>)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#&gt; GET request successful. Parsing...</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="co">#&gt; # A tibble: 30 x 9</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co">#&gt;    feed_title feed_link feed_description feed_pub_date       item_title</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;dttm&gt;              &lt;chr&gt;     </span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co">#&gt;  1 Hacker Ne… https://… Links for the i… 2020-05-06 12:59:58 No cookie…</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co">#&gt;  2 Hacker Ne… https://… Links for the i… 2020-05-06 12:59:58 Uber is l…</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co">#&gt;  3 Hacker Ne… https://… Links for the i… 2020-05-06 12:59:58 Show HN: …</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co">#&gt;  4 Hacker Ne… https://… Links for the i… 2020-05-06 12:59:58 Simple Ho…</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co">#&gt;  5 Hacker Ne… https://… Links for the i… 2020-05-06 12:59:58 WinUI – T…</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co">#&gt;  6 Hacker Ne… https://… Links for the i… 2020-05-06 12:59:58 Systems S…</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co">#&gt;  7 Hacker Ne… https://… Links for the i… 2020-05-06 12:59:58 Bats in P…</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co">#&gt;  8 Hacker Ne… https://… Links for the i… 2020-05-06 12:59:58 Take care…</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="co">#&gt;  9 Hacker Ne… https://… Links for the i… 2020-05-06 12:59:58 Point of …</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="co">#&gt; 10 Hacker Ne… https://… Links for the i… 2020-05-06 12:59:58 Säkkijärv…</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="co">#&gt; # … with 20 more rows, and 4 more variables: item_link &lt;chr&gt;,</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="co">#&gt; #   item_description &lt;chr&gt;, item_pub_date &lt;dttm&gt;, item_comments &lt;chr&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co"># adding a small time delay to avoid simultaneous posts to the API</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">Sys.sleep</span>(<span class="dv">3</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="kw">get_news</span>(<span class="dt">website =</span> <span class="st">&quot;news.ycombinator.com&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="co">#&gt; GET request successful. Parsing...</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="co">#&gt; Warning: Predicate functions must be wrapped in `where()`.</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="co">#&gt;   # Bad</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="co">#&gt;   data %&gt;% select(is.character)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="co">#&gt;   # Good</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="co">#&gt;   data %&gt;% select(where(is.character))</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a><span class="co">#&gt; ℹ Please update your code.</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="co">#&gt; This message is displayed once per session.</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 30 x 10</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="co">#&gt;    feed_title feed_link feed_description feed_pub_date       item_title</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;dttm&gt;              &lt;chr&gt;     </span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a><span class="co">#&gt;  1 Hacker Ne… https://… Links for the i… 2020-06-05 13:42:29 There Are…</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a><span class="co">#&gt;  2 Hacker Ne… https://… Links for the i… 2020-06-05 13:42:29 SimRefine…</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a><span class="co">#&gt;  3 Hacker Ne… https://… Links for the i… 2020-06-05 13:42:29 Why Is th…</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a><span class="co">#&gt;  4 Hacker Ne… https://… Links for the i… 2020-06-05 13:42:29 Mental We…</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a><span class="co">#&gt;  5 Hacker Ne… https://… Links for the i… 2020-06-05 13:42:29 Google2Cs…</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a><span class="co">#&gt;  6 Hacker Ne… https://… Links for the i… 2020-06-05 13:42:29 People tr…</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a><span class="co">#&gt;  7 Hacker Ne… https://… Links for the i… 2020-06-05 13:42:29 Ask HN: H…</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a><span class="co">#&gt;  8 Hacker Ne… https://… Links for the i… 2020-06-05 13:42:29 Julia as …</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a><span class="co">#&gt;  9 Hacker Ne… https://… Links for the i… 2020-06-05 13:42:29 First pho…</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a><span class="co">#&gt; 10 Hacker Ne… https://… Links for the i… 2020-06-05 13:42:29 High-Spee…</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a><span class="co">#&gt; # … with 20 more rows, and 5 more variables: item_link &lt;chr&gt;,</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true"></a><span class="co">#&gt; #   item_description &lt;chr&gt;, item_pub_date &lt;dttm&gt;, item_category &lt;list&gt;,</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true"></a><span class="co">#&gt; #   item_comments &lt;chr&gt;</span></span></code></pre></div>
 </div>
 <div id="get_headlines" class="section level3">
 <h3>get_headlines()</h3>
 <p>The second function <code>get_headlines</code> is a helper function that returns a tibble of just the headlines, instead of the full rss feed.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># adding a small time delay to avoid simultaneous posts to the API</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">Sys.sleep</span>(<span class="dv">1</span>)</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">get_headlines</span>(<span class="dt">website =</span> <span class="st">&quot;news.ycombinator.com&quot;</span>)</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; GET request successful. Parsing...</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt;                                                             feed_entries$item_title</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; 1    No cookie consent walls, scrolling isn’t consent, says EU data protection body</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt; 2                        Uber is laying off 3,700, as rides plummet due to Covid-19</span></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt; 3                                       Show HN: Axiom – No-code Browser Automation</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt; 4                                                  Simple Homemade TEA Laser (2007)</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt; 5                                  WinUI – The modern native UI platform of Windows</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt; 6                 Systems Smart Enough to Know When They&#39;re Not Smart Enough (2017)</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt; 7                                               Bats in Portuguese Libraries (2018)</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#&gt; 8                                             Take care editing bash scripts (2019)</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a><span class="co">#&gt; 9                                                         Point of WebGPU on Native</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt; 10                                                               Säkkijärven polkka</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt; 11      Running a full IBM System/370 Mainframe on a Raspberry Pi Zero for ~5 years</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt; 12                                                     Initial Impressions of WSL 2</span></span>
-<span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt; 13                                                     The Framing of the Developer</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#&gt; 14                                                 Visual Macros in TeXmacs [video]</span></span>
-<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#&gt; 15                                                                            Onfim</span></span>
-<span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt; 16 Early treatment of Covid-19 with HCQ and AZ:retrospective analysis of 1061 cases</span></span>
-<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt; 17             Circle – A C++ compiler with compile-time imperative metaprogramming</span></span>
-<span id="cb2-23"><a href="#cb2-23"></a><span class="co">#&gt; 18                                                                     Inkscape 1.0</span></span>
-<span id="cb2-24"><a href="#cb2-24"></a><span class="co">#&gt; 19                         Ask HN: Any good FOSS alternative to Google&#39;s reCAPTCHA?</span></span>
-<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; 20                                         I was tricked into thinking I had “grit”</span></span>
-<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#&gt; 21                                                                    Retrofuturism</span></span>
-<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#&gt; 22                    Two Heads: A marriage devoted to the mind-body problem (2007)</span></span>
-<span id="cb2-28"><a href="#cb2-28"></a><span class="co">#&gt; 23            Rosetta: The Engine Behind Cray’s Slingshot Exascale-Era Interconnect</span></span>
-<span id="cb2-29"><a href="#cb2-29"></a><span class="co">#&gt; 24                                                        Van Gogh&#39;s Favorite Books</span></span>
-<span id="cb2-30"><a href="#cb2-30"></a><span class="co">#&gt; 25                    React-flow: a library to create interactive node-based graphs</span></span>
-<span id="cb2-31"><a href="#cb2-31"></a><span class="co">#&gt; 26                                                     Post Mortem on Salt Incident</span></span>
-<span id="cb2-32"><a href="#cb2-32"></a><span class="co">#&gt; 27                                             Covering Science at Dangerous Speeds</span></span>
-<span id="cb2-33"><a href="#cb2-33"></a><span class="co">#&gt; 28                                              What we get wrong about Machiavelli</span></span>
-<span id="cb2-34"><a href="#cb2-34"></a><span class="co">#&gt; 29                Textile Hub: databases, storage, and remote IPFS for app builders</span></span>
-<span id="cb2-35"><a href="#cb2-35"></a><span class="co">#&gt; 30                  Junk-Bond Sellers Desperate for Funding Swallow Yields over 10%</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="co"># adding a small time delay to avoid simultaneous posts to the API</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">Sys.sleep</span>(<span class="dv">3</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="kw">get_headlines</span>(<span class="dt">website =</span> <span class="st">&quot;news.ycombinator.com&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co">#&gt; GET request successful. Parsing...</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co">#&gt;                                                           feed_entries$item_title</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="co">#&gt; 1                                                   There Are No Bugs, Just TODOs</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="co">#&gt; 2                                                           SimRefinery Recovered</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="co">#&gt; 3                                     Why Is the Human Brain So Efficient? (2018)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co">#&gt; 4                                                                   Mental Wealth</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="co">#&gt; 5      Google2Csv is a simple Google scraper that saves the results on a CSV file</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="co">#&gt; 6     People try to do right by each other, no matter the motivation, study finds</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a><span class="co">#&gt; 7                          Ask HN: How do I reach making $1-1.5k/mo in 13 months?</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="co">#&gt; 8                                                       Julia as a CLI Calculator</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a><span class="co">#&gt; 9                                       First photo of HS2 tunnel boring machines</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="co">#&gt; 10                                      High-Speed Pool and Billiards Video Clips</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a><span class="co">#&gt; 11           Germany, France launch Gaia-X platform in bid for ‘tech sovereignty’</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a><span class="co">#&gt; 12                                                     A History of Clojure [pdf]</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a><span class="co">#&gt; 13                             Why So Many Police Are Handling the Protests Wrong</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a><span class="co">#&gt; 14                           Ask HN: How to Disagree with the Rest of Management?</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a><span class="co">#&gt; 15       WeChat permanently closes account after user sets CCP-offensive password</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a><span class="co">#&gt; 16           Synthetic red blood cells mimic natural ones, and have new abilities</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a><span class="co">#&gt; 17                                                         Julialang Antipatterns</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a><span class="co">#&gt; 18            Signal app downloads spike as US protesters seek message encryption</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a><span class="co">#&gt; 19                  Ask HN: Which Coursera courses/specializations you recommend?</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true"></a><span class="co">#&gt; 20                                                   The Beauty of Unix Pipelines</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true"></a><span class="co">#&gt; 21                                                                  Kids and Time</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true"></a><span class="co">#&gt; 22 Ask HN: Have you ever gone without a computer or phone for an extended period?</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true"></a><span class="co">#&gt; 23      Ask HN: Are my expectations on code quality and professionalism too high?</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true"></a><span class="co">#&gt; 24                                               Containers from first principles</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true"></a><span class="co">#&gt; 25                                        Words that don&#39;t translate into English</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true"></a><span class="co">#&gt; 26         The Story Behind The Unmarked Federal Agents Occupying Washington, D.C</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true"></a><span class="co">#&gt; 27                                                        Homoiconicity Revisited</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true"></a><span class="co">#&gt; 28                                            The Go Compiler Needs to Be Smarter</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true"></a><span class="co">#&gt; 29                                                    Open source 5G core network</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true"></a><span class="co">#&gt; 30                                                        macOS in QEMU in Docker</span></span></code></pre></div>
 </div>
 <div id="tld_sources" class="section level3">
 <h3>tld_sources()</h3>
 <p>The function <code>tld_sources</code> is a helper function for browsing news sites by top level domains. It’s useful to see which news sites from a country are present in the database.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">tld_sources</span>(<span class="st">&quot;de&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; # A tibble: 40 x 2</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt;    url                 rss_endpoint                                             </span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt;    &lt;chr&gt;               &lt;chr&gt;                                                    </span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt;  1 spiegel.de          https://www.spiegel.de/international/index.rss           </span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt;  2 zeit.de             http://newsfeed.zeit.de/index                            </span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt;  3 thelocal.de         https://www.thelocal.de/feeds/rss.php                    </span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co">#&gt;  4 deutschland.de      https://www.deutschland.de/en/feed-news/rss.xml          </span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt;  5 raccoon.onyxbits.de https://raccoon.onyxbits.de/blog/index.xml               </span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt;  6 abendblatt.de       http://www.abendblatt.de/?service=Rss                    </span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#&gt;  7 berliner-zeitung.de https://www.berliner-zeitung.de/feed/index.rss           </span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co">#&gt;  8 bild.de             http://www.bild.de/rss-feeds/rss-16725492,feed=home.bild…</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co">#&gt;  9 bz-berlin.de        http://www.bz-berlin.de/rss                              </span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co">#&gt; 10 capital.de          http://www.capital.de/rss                                </span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co">#&gt; # … with 30 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">tld_sources</span>(<span class="st">&quot;de&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 40 x 2</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="co">#&gt;    url                 rss_endpoint                                             </span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="co">#&gt;    &lt;chr&gt;               &lt;chr&gt;                                                    </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="co">#&gt;  1 spiegel.de          https://www.spiegel.de/international/index.rss           </span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a><span class="co">#&gt;  2 zeit.de             http://newsfeed.zeit.de/index                            </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a><span class="co">#&gt;  3 thelocal.de         https://www.thelocal.de/feeds/rss.php                    </span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="co">#&gt;  4 deutschland.de      https://www.deutschland.de/en/feed-news/rss.xml          </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="co">#&gt;  5 raccoon.onyxbits.de https://raccoon.onyxbits.de/blog/index.xml               </span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="co">#&gt;  6 abendblatt.de       http://www.abendblatt.de/?service=Rss                    </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="co">#&gt;  7 berliner-zeitung.de https://www.berliner-zeitung.de/feed/index.rss           </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="co">#&gt;  8 bild.de             http://www.bild.de/rss-feeds/rss-16725492,feed=home.bild…</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="co">#&gt;  9 bz-berlin.de        http://www.bz-berlin.de/rss                              </span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="co">#&gt; 10 capital.de          http://www.capital.de/rss                                </span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a><span class="co">#&gt; # … with 30 more rows</span></span></code></pre></div>
 </div>
 </div>
 <div id="use-case" class="section level2">
 <h2>Use case</h2>
 <p>This package can be convenient if you need to fetch news from various websites for further analysis and you don’t want to search manually for the URL of their RSS feeds.</p>
 <p>Assuming we have the news sites we want to follow:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>sites =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;bbc.com&quot;</span>, <span class="st">&quot;spiegel.de&quot;</span>, <span class="st">&quot;washingtonpost.com&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>sites =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;bbc.com&quot;</span>, <span class="st">&quot;spiegel.de&quot;</span>, <span class="st">&quot;washingtonpost.com&quot;</span>)</span></code></pre></div>
 <p>We can get a list of data frames with:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">lapply</span>(sites, get_news)</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt; GET request successful. Parsing...</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt; </span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; GET request successful. Parsing...</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt; </span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; GET request successful. Parsing...</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; [[1]]</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt; # A tibble: 26 x 13</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;    feed_title feed_link feed_description feed_language feed_pub_date      </span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;         &lt;dttm&gt;             </span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt;  1 BBC News … https://… BBC News - World en-gb         2020-05-06 08:12:52</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt;  2 BBC News … https://… BBC News - World en-gb         2020-05-06 08:12:52</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt;  3 BBC News … https://… BBC News - World en-gb         2020-05-06 08:12:52</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt;  4 BBC News … https://… BBC News - World en-gb         2020-05-06 08:12:52</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt;  5 BBC News … https://… BBC News - World en-gb         2020-05-06 08:12:52</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt;  6 BBC News … https://… BBC News - World en-gb         2020-05-06 08:12:52</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt;  7 BBC News … https://… BBC News - World en-gb         2020-05-06 08:12:52</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt;  8 BBC News … https://… BBC News - World en-gb         2020-05-06 08:12:52</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#&gt;  9 BBC News … https://… BBC News - World en-gb         2020-05-06 08:12:52</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#&gt; 10 BBC News … https://… BBC News - World en-gb         2020-05-06 08:12:52</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#&gt; # … with 16 more rows, and 8 more variables: feed_last_build_date &lt;dttm&gt;,</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#&gt; #   feed_generator &lt;chr&gt;, feed_ttl &lt;chr&gt;, item_title &lt;chr&gt;, item_link &lt;chr&gt;,</span></span>
-<span id="cb5-23"><a href="#cb5-23"></a><span class="co">#&gt; #   item_description &lt;chr&gt;, item_pub_date &lt;dttm&gt;, item_guid &lt;chr&gt;</span></span>
-<span id="cb5-24"><a href="#cb5-24"></a><span class="co">#&gt; </span></span>
-<span id="cb5-25"><a href="#cb5-25"></a><span class="co">#&gt; [[2]]</span></span>
-<span id="cb5-26"><a href="#cb5-26"></a><span class="co">#&gt; # A tibble: 20 x 11</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a><span class="co">#&gt;    feed_title feed_link feed_description feed_language feed_pub_date      </span></span>
-<span id="cb5-28"><a href="#cb5-28"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;         &lt;dttm&gt;             </span></span>
-<span id="cb5-29"><a href="#cb5-29"></a><span class="co">#&gt;  1 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-30"><a href="#cb5-30"></a><span class="co">#&gt;  2 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-31"><a href="#cb5-31"></a><span class="co">#&gt;  3 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-32"><a href="#cb5-32"></a><span class="co">#&gt;  4 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-33"><a href="#cb5-33"></a><span class="co">#&gt;  5 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-34"><a href="#cb5-34"></a><span class="co">#&gt;  6 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-35"><a href="#cb5-35"></a><span class="co">#&gt;  7 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-36"><a href="#cb5-36"></a><span class="co">#&gt;  8 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-37"><a href="#cb5-37"></a><span class="co">#&gt;  9 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-38"><a href="#cb5-38"></a><span class="co">#&gt; 10 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-39"><a href="#cb5-39"></a><span class="co">#&gt; 11 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-40"><a href="#cb5-40"></a><span class="co">#&gt; 12 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-41"><a href="#cb5-41"></a><span class="co">#&gt; 13 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-42"><a href="#cb5-42"></a><span class="co">#&gt; 14 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-43"><a href="#cb5-43"></a><span class="co">#&gt; 15 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-44"><a href="#cb5-44"></a><span class="co">#&gt; 16 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-45"><a href="#cb5-45"></a><span class="co">#&gt; 17 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-46"><a href="#cb5-46"></a><span class="co">#&gt; 18 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-47"><a href="#cb5-47"></a><span class="co">#&gt; 19 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-48"><a href="#cb5-48"></a><span class="co">#&gt; 20 DER SPIEG… https://… Deutschlands fü… de            2020-05-06 16:11:49</span></span>
-<span id="cb5-49"><a href="#cb5-49"></a><span class="co">#&gt; # … with 6 more variables: feed_last_build_date &lt;dttm&gt;, item_title &lt;chr&gt;,</span></span>
-<span id="cb5-50"><a href="#cb5-50"></a><span class="co">#&gt; #   item_link &lt;chr&gt;, item_description &lt;chr&gt;, item_pub_date &lt;dttm&gt;,</span></span>
-<span id="cb5-51"><a href="#cb5-51"></a><span class="co">#&gt; #   item_guid &lt;chr&gt;</span></span>
-<span id="cb5-52"><a href="#cb5-52"></a><span class="co">#&gt; </span></span>
-<span id="cb5-53"><a href="#cb5-53"></a><span class="co">#&gt; [[3]]</span></span>
-<span id="cb5-54"><a href="#cb5-54"></a><span class="co">#&gt; # A tibble: 25 x 10</span></span>
-<span id="cb5-55"><a href="#cb5-55"></a><span class="co">#&gt;    feed_title feed_link feed_description feed_language feed_pub_date      </span></span>
-<span id="cb5-56"><a href="#cb5-56"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;         &lt;dttm&gt;             </span></span>
-<span id="cb5-57"><a href="#cb5-57"></a><span class="co">#&gt;  1 World      http://w… The Washington … en-US         2020-05-06 07:00:54</span></span>
-<span id="cb5-58"><a href="#cb5-58"></a><span class="co">#&gt;  2 World      http://w… The Washington … en-US         2020-05-06 07:00:54</span></span>
-<span id="cb5-59"><a href="#cb5-59"></a><span class="co">#&gt;  3 World      http://w… The Washington … en-US         2020-05-06 07:00:54</span></span>
-<span id="cb5-60"><a href="#cb5-60"></a><span class="co">#&gt;  4 World      http://w… The Washington … en-US         2020-05-06 07:00:54</span></span>
-<span id="cb5-61"><a href="#cb5-61"></a><span class="co">#&gt;  5 World      http://w… The Washington … en-US         2020-05-06 07:00:54</span></span>
-<span id="cb5-62"><a href="#cb5-62"></a><span class="co">#&gt;  6 World      http://w… The Washington … en-US         2020-05-06 07:00:54</span></span>
-<span id="cb5-63"><a href="#cb5-63"></a><span class="co">#&gt;  7 World      http://w… The Washington … en-US         2020-05-06 07:00:54</span></span>
-<span id="cb5-64"><a href="#cb5-64"></a><span class="co">#&gt;  8 World      http://w… The Washington … en-US         2020-05-06 07:00:54</span></span>
-<span id="cb5-65"><a href="#cb5-65"></a><span class="co">#&gt;  9 World      http://w… The Washington … en-US         2020-05-06 07:00:54</span></span>
-<span id="cb5-66"><a href="#cb5-66"></a><span class="co">#&gt; 10 World      http://w… The Washington … en-US         2020-05-06 07:00:54</span></span>
-<span id="cb5-67"><a href="#cb5-67"></a><span class="co">#&gt; # … with 15 more rows, and 5 more variables: item_title &lt;chr&gt;, item_link &lt;chr&gt;,</span></span>
-<span id="cb5-68"><a href="#cb5-68"></a><span class="co">#&gt; #   item_description &lt;chr&gt;, item_pub_date &lt;dttm&gt;, item_guid &lt;chr&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">lapply</span>(sites, get_news)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="co">#&gt; GET request successful. Parsing...</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="co">#&gt; GET request successful. Parsing...</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="co">#&gt; GET request successful. Parsing...</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 35 x 14</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true"></a><span class="co">#&gt;    feed_title feed_link feed_description feed_language feed_pub_date      </span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;         &lt;dttm&gt;             </span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true"></a><span class="co">#&gt;  1 BBC News … https://… BBC News - World en-gb         2020-06-05 12:01:05</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true"></a><span class="co">#&gt;  2 BBC News … https://… BBC News - World en-gb         2020-06-05 12:01:05</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true"></a><span class="co">#&gt;  3 BBC News … https://… BBC News - World en-gb         2020-06-05 12:01:05</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true"></a><span class="co">#&gt;  4 BBC News … https://… BBC News - World en-gb         2020-06-05 12:01:05</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true"></a><span class="co">#&gt;  5 BBC News … https://… BBC News - World en-gb         2020-06-05 12:01:05</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true"></a><span class="co">#&gt;  6 BBC News … https://… BBC News - World en-gb         2020-06-05 12:01:05</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true"></a><span class="co">#&gt;  7 BBC News … https://… BBC News - World en-gb         2020-06-05 12:01:05</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true"></a><span class="co">#&gt;  8 BBC News … https://… BBC News - World en-gb         2020-06-05 12:01:05</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true"></a><span class="co">#&gt;  9 BBC News … https://… BBC News - World en-gb         2020-06-05 12:01:05</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true"></a><span class="co">#&gt; 10 BBC News … https://… BBC News - World en-gb         2020-06-05 12:01:05</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true"></a><span class="co">#&gt; # … with 25 more rows, and 9 more variables: feed_last_build_date &lt;dttm&gt;,</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true"></a><span class="co">#&gt; #   feed_generator &lt;chr&gt;, feed_ttl &lt;chr&gt;, item_title &lt;chr&gt;, item_link &lt;chr&gt;,</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true"></a><span class="co">#&gt; #   item_description &lt;chr&gt;, item_pub_date &lt;dttm&gt;, item_guid &lt;chr&gt;,</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true"></a><span class="co">#&gt; #   item_category &lt;list&gt;</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 20 x 12</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true"></a><span class="co">#&gt;    feed_title feed_link feed_description feed_language feed_pub_date      </span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;         &lt;dttm&gt;             </span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true"></a><span class="co">#&gt;  1 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true"></a><span class="co">#&gt;  2 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true"></a><span class="co">#&gt;  3 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true"></a><span class="co">#&gt;  4 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true"></a><span class="co">#&gt;  5 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true"></a><span class="co">#&gt;  6 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true"></a><span class="co">#&gt;  7 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true"></a><span class="co">#&gt;  8 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true"></a><span class="co">#&gt;  9 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true"></a><span class="co">#&gt; 10 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true"></a><span class="co">#&gt; 11 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true"></a><span class="co">#&gt; 12 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true"></a><span class="co">#&gt; 13 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true"></a><span class="co">#&gt; 14 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true"></a><span class="co">#&gt; 15 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true"></a><span class="co">#&gt; 16 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true"></a><span class="co">#&gt; 17 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true"></a><span class="co">#&gt; 18 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true"></a><span class="co">#&gt; 19 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true"></a><span class="co">#&gt; 20 DER SPIEG… https://… Deutschlands fü… de            2020-06-05 16:44:07</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true"></a><span class="co">#&gt; # … with 7 more variables: feed_last_build_date &lt;dttm&gt;, item_title &lt;chr&gt;,</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true"></a><span class="co">#&gt; #   item_link &lt;chr&gt;, item_description &lt;chr&gt;, item_pub_date &lt;dttm&gt;,</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true"></a><span class="co">#&gt; #   item_guid &lt;chr&gt;, item_category &lt;list&gt;</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true"></a><span class="co">#&gt; </span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 26 x 11</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true"></a><span class="co">#&gt;    feed_title feed_link feed_description feed_language feed_pub_date      </span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;         &lt;dttm&gt;             </span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true"></a><span class="co">#&gt;  1 World      http://w… The Washington … en-US         2020-06-05 08:01:43</span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true"></a><span class="co">#&gt;  2 World      http://w… The Washington … en-US         2020-06-05 08:01:43</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true"></a><span class="co">#&gt;  3 World      http://w… The Washington … en-US         2020-06-05 08:01:43</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true"></a><span class="co">#&gt;  4 World      http://w… The Washington … en-US         2020-06-05 08:01:43</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true"></a><span class="co">#&gt;  5 World      http://w… The Washington … en-US         2020-06-05 08:01:43</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true"></a><span class="co">#&gt;  6 World      http://w… The Washington … en-US         2020-06-05 08:01:43</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true"></a><span class="co">#&gt;  7 World      http://w… The Washington … en-US         2020-06-05 08:01:43</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true"></a><span class="co">#&gt;  8 World      http://w… The Washington … en-US         2020-06-05 08:01:43</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true"></a><span class="co">#&gt;  9 World      http://w… The Washington … en-US         2020-06-05 08:01:43</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true"></a><span class="co">#&gt; 10 World      http://w… The Washington … en-US         2020-06-05 08:01:43</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true"></a><span class="co">#&gt; # … with 16 more rows, and 6 more variables: item_title &lt;chr&gt;, item_link &lt;chr&gt;,</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true"></a><span class="co">#&gt; #   item_description &lt;chr&gt;, item_pub_date &lt;dttm&gt;, item_guid &lt;chr&gt;,</span></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true"></a><span class="co">#&gt; #   item_category &lt;list&gt;</span></span></code></pre></div>
 </div>
 
 

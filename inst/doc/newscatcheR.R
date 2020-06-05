@@ -9,11 +9,13 @@ library(newscatcheR)
 library(tidyRSS)
 
 ## -----------------------------------------------------------------------------
+# adding a small time delay to avoid simultaneous posts to the API
+Sys.sleep(3)
 get_news(website = "news.ycombinator.com")
 
 ## -----------------------------------------------------------------------------
 # adding a small time delay to avoid simultaneous posts to the API
-Sys.sleep(1)
+Sys.sleep(3)
 get_headlines(website = "news.ycombinator.com")
 
 ## -----------------------------------------------------------------------------
