@@ -11,19 +11,22 @@ library(tidyRSS)
 ## -----------------------------------------------------------------------------
 # adding a small time delay to avoid simultaneous posts to the API
 Sys.sleep(3)
-get_news(website = "news.ycombinator.com")
+get_news(website = "ycombinator.com", rss_table = package_rss)
 
 ## -----------------------------------------------------------------------------
 # adding a small time delay to avoid simultaneous posts to the API
 Sys.sleep(3)
-get_headlines(website = "news.ycombinator.com")
+get_headlines(website = "ycombinator.com", rss_table = package_rss)
 
-## -----------------------------------------------------------------------------
-tld_sources("de")
+## ----example_3----------------------------------------------------------------
+describe_url("bbc.com")
 
-## -----------------------------------------------------------------------------
-sites = c("bbc.com", "spiegel.de", "washingtonpost.com")
+## ----example_4----------------------------------------------------------------
+filter_urls(topic = "tech", country = "IT", language = "it")
 
-## -----------------------------------------------------------------------------
-lapply(sites, get_news)
+## ---- eval = FALSE------------------------------------------------------------
+#  sites = c("bbc.com", "spiegel.de", "washingtonpost.com")
+
+## ---- eval = FALSE------------------------------------------------------------
+#  lapply(sites, get_news)
 

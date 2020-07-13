@@ -5,6 +5,14 @@
 
 <!-- badges: start -->
 
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/newscatcheR)](https://cran.r-project.org/package=newscatcheR)
+[![CRAN\_Download\_Badge](https://cranlogs.r-pkg.org/badges/newscatcheR)](https://CRAN.R-project.org/package=newscatcheR)
+[![CRAN\_Download\_Badge](https://cranlogs.r-pkg.org/badges/grand-total/newscatcheR)](https://CRAN.R-project.org/package=newscatcheR)
+![R-CMD-check](https://github.com/discindo/newscatcheR/workflows/R-CMD-check/badge.svg)
+![pkgdown](https://github.com/discindo/newscatcheR/workflows/pkgdown/badge.svg)
+[![Codecov test
+coverage](https://codecov.io/gh/discindo/newscatcheR/branch/master/graph/badge.svg)](https://codecov.io/gh/discindo/newscatcheR?branch=master)
+
 <!-- badges: end -->
 
 Programmatically collect normalized news from (almost) any website using
@@ -13,11 +21,15 @@ R
 newscatcheR is an R clone of the python package
 [newscatcher](https://github.com/kotartemiy/newscatcher).
 
-The package provides a dataset of news sites and their rss feeds, and
-two functions that work as a wrapper around
-[tidyRSS](https://github.com/RobertMyles/tidyRSS) to fetch the feed from
-a given site. It also provides a function to check the dataset for news
-sources per top level domain.
+The package provides a dataset of news sites and their rss feeds,
+together with some characteristics of the websites such as the topic,
+country or language of the website, and few functions explore and access
+the feeds from `R`.
+
+Two functions that work as a wrapper around
+[tidyRSS](https://github.com/RobertMyles/tidyRSS) can be used to fetch
+the feed from a given website. Two additional functions can be used to
+conveniently browse the websites dataset.
 
 ## Installation
 
@@ -50,7 +62,7 @@ devtools::install_github("discindo/newscatcheR")
 library(newscatcheR)
 # adding a small time delay to avoid simultaneous posts to the API
 Sys.sleep(3)
-get_news("news.ycombinator.com")
+get_news("ycombinator.com")
 #> GET request successful. Parsing...
 #> Warning: Predicate functions must be wrapped in `where()`.
 #> 
@@ -65,16 +77,16 @@ get_news("news.ycombinator.com")
 #> # A tibble: 30 x 10
 #>    feed_title feed_link feed_description feed_pub_date       item_title
 #>    <chr>      <chr>     <chr>            <dttm>              <chr>     
-#>  1 Hacker Ne… https://… Links for the i… 2020-06-05 12:26:26 Ask HN: H…
-#>  2 Hacker Ne… https://… Links for the i… 2020-06-05 12:26:26 SimRefine…
-#>  3 Hacker Ne… https://… Links for the i… 2020-06-05 12:26:26 Why Is th…
-#>  4 Hacker Ne… https://… Links for the i… 2020-06-05 12:26:26 Mental We…
-#>  5 Hacker Ne… https://… Links for the i… 2020-06-05 12:26:26 People tr…
-#>  6 Hacker Ne… https://… Links for the i… 2020-06-05 12:26:26 First pho…
-#>  7 Hacker Ne… https://… Links for the i… 2020-06-05 12:26:26 A History…
-#>  8 Hacker Ne… https://… Links for the i… 2020-06-05 12:26:26 Germany, …
-#>  9 Hacker Ne… https://… Links for the i… 2020-06-05 12:26:26 Julia as …
-#> 10 Hacker Ne… https://… Links for the i… 2020-06-05 12:26:26 DeepFaceD…
+#>  1 Hacker Ne… https://… Links for the i… 2020-07-11 18:22:03 How much …
+#>  2 Hacker Ne… https://… Links for the i… 2020-07-11 18:22:03 CRDTs: Th…
+#>  3 Hacker Ne… https://… Links for the i… 2020-07-11 18:22:03 How to Un…
+#>  4 Hacker Ne… https://… Links for the i… 2020-07-11 18:22:03 Scientist…
+#>  5 Hacker Ne… https://… Links for the i… 2020-07-11 18:22:03 Show HN: …
+#>  6 Hacker Ne… https://… Links for the i… 2020-07-11 18:22:03 Testing F…
+#>  7 Hacker Ne… https://… Links for the i… 2020-07-11 18:22:03 Show HN: …
+#>  8 Hacker Ne… https://… Links for the i… 2020-07-11 18:22:03 A Doctor …
+#>  9 Hacker Ne… https://… Links for the i… 2020-07-11 18:22:03 AES67 (Au…
+#> 10 Hacker Ne… https://… Links for the i… 2020-07-11 18:22:03 Tracking …
 #> # … with 20 more rows, and 5 more variables: item_link <chr>,
 #> #   item_description <chr>, item_pub_date <dttm>, item_category <list>,
 #> #   item_comments <chr>
@@ -87,60 +99,61 @@ feed.
 library(newscatcheR)
 # adding a small time delay to avoid simultaneous posts to the API
 Sys.sleep(3)  
-get_headlines("news.ycombinator.com")
+get_headlines("ycombinator.com")
 #> GET request successful. Parsing...
-#>                                                           feed_entries$item_title
-#> 1                          Ask HN: How do I reach making $1-1.5k/mo in 13 months?
-#> 2                                                           SimRefinery Recovered
-#> 3                                     Why Is the Human Brain So Efficient? (2018)
-#> 4                                                                   Mental Wealth
-#> 5     People try to do right by each other, no matter the motivation, study finds
-#> 6                                       First photo of HS2 tunnel boring machines
-#> 7                                                      A History of Clojure [pdf]
-#> 8            Germany, France launch Gaia-X platform in bid for ‘tech sovereignty’
-#> 9                                                       Julia as a CLI Calculator
-#> 10      DeepFaceDrawing Generates Photorealistic Portraits from Freehand Sketches
-#> 11      Ask HN: Are my expectations on code quality and professionalism too high?
-#> 12                                            The Go Compiler Needs to Be Smarter
-#> 13                                                Unker Non-Linear Writing System
-#> 14            Signal app downloads spike as US protesters seek message encryption
-#> 15           Synthetic red blood cells mimic natural ones, and have new abilities
-#> 16                                                   The Beauty of Unix Pipelines
-#> 17                                                                  Kids and Time
-#> 18                          555 timer teardown: inside the most popular IC (2016)
-#> 19                                  Currents: Have Meaningful Discussions at Work
-#> 20                                        Words that don't translate into English
-#> 21                                                        Homoiconicity Revisited
-#> 22                                               Containers from first principles
-#> 23 Ask HN: Have you ever gone without a computer or phone for an extended period?
-#> 24                                                    Why Sleep Deprivation Kills
-#> 25                                                        macOS in QEMU in Docker
-#> 26                                                         The Illiac IV Computer
-#> 27                                  Cryo-electron microscopy breaks a key barrier
-#> 28                                                          Emacs as Email Client
-#> 29                        In a photo of a black hole, a possible key to mysteries
-#> 30                         WeChat permabans account for using wrongthink password
+#>                                                             feed_entries$item_title
+#> 1                                  How much your computer can do in a second (2015)
+#> 2                                                     CRDTs: The Hard Parts [video]
+#> 3                                                          How to Understand Things
+#> 4                 Scientists say you can cancel the noise but keep your window open
+#> 5   Show HN: Trail Router – generate running routes that prefer greenery and nature
+#> 6                            Testing Firefox More Efficiently with Machine Learning
+#> 7     Show HN: An extension that removes upvote and comment counts from Hacker News
+#> 8               A Doctor Who Championed Hand-Washing And Briefly Saved Lives (2015)
+#> 9                                          AES67 (Audio over IP protocol) resources
+#> 10                                     Tracking Pico Balloons Using Ham Radio [pdf]
+#> 11 CDC director: Keeping schools closed greater health threat to children reopening
+#> 12            Favorite Problems: A Practical Framework for Discovering Your Purpose
+#> 13                                                              Refined Hacker News
+#> 14                                            Scanimage: Scan from the Command Line
+#> 15                                                     Soup.io Will Be Discontinued
+#> 16                     Ask HN: What's the worst piece of software you use everyday?
+#> 17                                                  Virtual Wind Instruments (2018)
+#> 18                                                           The Case for Causal AI
+#> 19                                                          Beware of Being “Right”
+#> 20    A Little Startup That Could: Aquarius Builds an Engine Others Only Dreamed Of
+#> 21                                                Why are toys such a bad business?
+#> 22                                             Decentralized Reinforcement Learning
+#> 23                          Modes, Medians and Means: A Unifying Perspective (2013)
+#> 24                                             Migrating Away from Google Analytics
+#> 25                           Global Decision-Making via Local Economic Transactions
+#> 26                                 2000-year-old Iron Age skeleton discovered in UK
+#> 27                                      Eigenquestions: The Art of Framing Problems
+#> 28                 Show HN: Form-validation.js – JavaScript form validation library
+#> 29                                                             Oura Ring 2 Teardown
+#> 30                                                Linux kernel in-tree Rust support
 ```
 
-`tld_sources(tld)` returns rows from the provided dataset of news sites
-with the given top level domain
+`describe_url(website)` returns the topics of a given web site.
 
 ``` r
-library(newscatcheR)
-tld_sources("it")
-#> # A tibble: 10 x 2
-#>    url                  rss_endpoint                                      
-#>    <chr>                <chr>                                             
-#>  1 ansa.it              http://www.ansa.it/web/ansait_web_rss_homepage.xml
-#>  2 thinkandbuild.it     https://www.thinkandbuild.it/feed/                
-#>  3 wasproject.it        http://www.wasproject.it/w/en/blog-2/feed         
-#>  4 corriere.it          http://www.corriere.it/rss/homepage.xml           
-#>  5 gazzetta.it          http://www.gazzetta.it/rss/calcio.xml             
-#>  6 ilfattoquotidiano.it http://www.ilfattoquotidiano.it/feed/             
-#>  7 lastampa.it          http://www.lastampa.it/redazione/rss_home.xml     
-#>  8 punto-informatico.it http://punto-informatico.it/fader/pixml.xml       
-#>  9 repubblica.it        http://www.repubblica.it/rss/homepage/rss2.0.xml  
-#> 10 tgcom.mediaset.it    http://www.tgcom.mediaset.it/rss/cronaca.xml
+describe_url("bbc.com")
+#> Topics available for website bbc.comare: travel, science, news, business.
+```
+
+`filter_urls(topic, country, language )` can be used to browse the
+dataset by topic, country or language.
+
+``` r
+filter_urls(topic = "tech", country = "IT", language = "it")
+#> # A tibble: 5 x 7
+#>   clean_url  language topic_unified main  clean_country rss_url       GlobalRank
+#>   <chr>      <chr>    <chr>         <chr> <chr>         <chr>         <chr>     
+#> 1 repubblic… it       tech          None  IT            http://www.r… 1086      
+#> 2 lastampa.… it       tech          None  IT            http://www.l… 2413      
+#> 3 ilsole24o… it       tech          None  IT            http://nova.… 2681      
+#> 4 corriere.… it       tech          None  IT            http://www.c… 1328      
+#> 5 ansa.it    it       tech          None  IT            http://www.a… 2248
 ```
 
 ## Use Case

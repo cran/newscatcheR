@@ -1,24 +1,24 @@
-test_that("get_news works", {
+test_that("get_news returns a tibble with feed contents", {
   # adding a small time delay to avoid simultaneous posts to the api
   Sys.sleep(3)
 
   # Get the news
-  output_news <- get_news("news.ycombinator.com")
+  output_news <- get_news("ycombinator.com")
 
   # What's returned
-  expect_is(output_news, "data.frame")
+  expect_s3_class(output_news, "data.frame")
 
-  # adding a small time delay to avoid simultaneous posts to the api
-  Sys.sleep(3)
+  # Get the news
+  output_news <- get_news("bbc.com", topic = "travel")
+
+  # What's returned
+  expect_s3_class(output_news, "data.frame")
 
   # numbers return an error
-  expect_error(output_news <- get_news(123))
-
-  # adding a small time delay to avoid simultaneous posts to the api
-  Sys.sleep(3)
+  expect_error(output_news = get_news(123))
 
   # url not in database returns error
-  expect_error(output_news <- get_news("example.com"))
+  expect_error(output_news = get_news("example.com"))
 
 })
 
