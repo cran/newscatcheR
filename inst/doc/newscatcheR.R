@@ -8,15 +8,15 @@ knitr::opts_chunk$set(
 library(newscatcheR)
 library(tidyRSS)
 
-## -----------------------------------------------------------------------------
-# adding a small time delay to avoid simultaneous posts to the API
-Sys.sleep(3)
-get_news(website = "ycombinator.com", rss_table = package_rss)
+## ---- eval = FALSE------------------------------------------------------------
+#  # adding a small time delay to avoid simultaneous posts to the API
+#  Sys.sleep(3)
+#  get_news(website = "ycombinator.com", rss_table = package_rss)
 
-## -----------------------------------------------------------------------------
-# adding a small time delay to avoid simultaneous posts to the API
-Sys.sleep(3)
-get_headlines(website = "ycombinator.com", rss_table = package_rss)
+## ---- eval = FALSE------------------------------------------------------------
+#  # adding a small time delay to avoid simultaneous posts to the API
+#  Sys.sleep(3)
+#  get_headlines(website = "ycombinator.com", rss_table = package_rss)
 
 ## ----example_3----------------------------------------------------------------
 describe_url("bbc.com")

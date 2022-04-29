@@ -28,12 +28,30 @@ document.addEventListener('DOMContentLoaded', function(e) {
 });
 </script>
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
-<style type="text/css">code{white-space: pre;}</style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -116,6 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
+
 
 
 
@@ -317,109 +336,64 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>The package provides three simple functions for reading RSS feeds from news outlets and have them conveniently returned as a tibble.</p>
-<p>The <em>newscatcheR</em> package provides a dataset of news sites and their rss feeds, together with some characteristics of the websites such as the topic, country or language of the website, and few functions explore and access the feeds from <code>R</code>.</p>
-<p>Two functions that work as a wrapper around <a href="https://github.com/RobertMyles/tidyRSS">tidyRSS</a> can be used to fetch the feed from a given website. Two additional functions can be used to conveniently browse the websites dataset.</p>
+<p>The package provides three simple functions for reading RSS feeds
+from news outlets and have them conveniently returned as a tibble.</p>
+<p>The <em>newscatcheR</em> package provides a dataset of news sites and
+their rss feeds, together with some characteristics of the websites such
+as the topic, country or language of the website, and few functions
+explore and access the feeds from <code>R</code>.</p>
+<p>Two functions that work as a wrapper around <a href="https://github.com/RobertMyles/tidyRSS">tidyRSS</a> can be used to
+fetch the feed from a given website. Two additional functions can be
+used to conveniently browse the websites dataset.</p>
 <div id="get_news" class="section level3">
 <h3>get_news()</h3>
-<p>The first function <code>get_news()</code> returns a tibble of the rss feed of a given site.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co"># adding a small time delay to avoid simultaneous posts to the API</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">Sys.sleep</span>(<span class="dv">3</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="kw">get_news</span>(<span class="dt">website =</span> <span class="st">&quot;ycombinator.com&quot;</span>, <span class="dt">rss_table =</span> package_rss)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="co">#&gt; GET request successful. Parsing...</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="co">#&gt; Warning: Predicate functions must be wrapped in `where()`.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="co">#&gt; </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="co">#&gt;   # Bad</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="co">#&gt;   data %&gt;% select(is.character)</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="co">#&gt; </span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="co">#&gt;   # Good</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="co">#&gt;   data %&gt;% select(where(is.character))</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="co">#&gt; </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a><span class="co">#&gt; ℹ Please update your code.</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="co">#&gt; This message is displayed once per session.</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 30 x 10</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="co">#&gt;    feed_title feed_link feed_description feed_pub_date       item_title</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a><span class="co">#&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;            &lt;dttm&gt;              &lt;chr&gt;     </span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a><span class="co">#&gt;  1 Hacker Ne… https://… Links for the i… 2020-07-12 06:18:12 Just Too …</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a><span class="co">#&gt;  2 Hacker Ne… https://… Links for the i… 2020-07-12 06:18:12 Do not re…</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a><span class="co">#&gt;  3 Hacker Ne… https://… Links for the i… 2020-07-12 06:18:12 Tour of R…</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a><span class="co">#&gt;  4 Hacker Ne… https://… Links for the i… 2020-07-12 06:18:12 Hosting y…</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a><span class="co">#&gt;  5 Hacker Ne… https://… Links for the i… 2020-07-12 06:18:12 Building …</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a><span class="co">#&gt;  6 Hacker Ne… https://… Links for the i… 2020-07-12 06:18:12 An F-22 t…</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a><span class="co">#&gt;  7 Hacker Ne… https://… Links for the i… 2020-07-12 06:18:12 The Polym…</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a><span class="co">#&gt;  8 Hacker Ne… https://… Links for the i… 2020-07-12 06:18:12 Show HN: …</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a><span class="co">#&gt;  9 Hacker Ne… https://… Links for the i… 2020-07-12 06:18:12 MariaDB T…</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a><span class="co">#&gt; 10 Hacker Ne… https://… Links for the i… 2020-07-12 06:18:12 Ruby lib/…</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a><span class="co">#&gt; # … with 20 more rows, and 5 more variables: item_link &lt;chr&gt;,</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true"></a><span class="co">#&gt; #   item_description &lt;chr&gt;, item_pub_date &lt;dttm&gt;, item_category &lt;list&gt;,</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true"></a><span class="co">#&gt; #   item_comments &lt;chr&gt;</span></span></code></pre></div>
+<p>The first function <code>get_news()</code> returns a tibble of the
+rss feed of a given site.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adding a small time delay to avoid simultaneous posts to the API</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.sleep</span>(<span class="dv">3</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">get_news</span>(<span class="at">website =</span> <span class="st">&quot;ycombinator.com&quot;</span>, <span class="at">rss_table =</span> package_rss)</span></code></pre></div>
 </div>
 <div id="get_headlines" class="section level3">
 <h3>get_headlines()</h3>
-<p>The second function <code>get_headlines</code> is a helper function that returns a tibble of just the headlines, instead of the full rss feed.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="co"># adding a small time delay to avoid simultaneous posts to the API</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">Sys.sleep</span>(<span class="dv">3</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="kw">get_headlines</span>(<span class="dt">website =</span> <span class="st">&quot;ycombinator.com&quot;</span>, <span class="dt">rss_table =</span> package_rss)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co">#&gt; GET request successful. Parsing...</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a><span class="co">#&gt;                                                            feed_entries$item_title</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a><span class="co">#&gt; 1                                                               Just Too Efficient</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a><span class="co">#&gt; 2                                        Do not remain nameless to yourself (1966)</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a><span class="co">#&gt; 3                                                                     Tour of Rust</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co">#&gt; 4                      Hosting your entire web application using S3 and CloudFront</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true"></a><span class="co">#&gt; 5                               Building a self-updating profile README for GitHub</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true"></a><span class="co">#&gt; 6                         An F-22 test pilot on the Raptor&#39;s flight control system</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true"></a><span class="co">#&gt; 7                                                            The Polymath Playbook</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true"></a><span class="co">#&gt; 8  Show HN: Trail Router – generate running routes that prefer greenery and nature</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true"></a><span class="co">#&gt; 9                                                     MariaDB Temporal Data Tables</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true"></a><span class="co">#&gt; 10                                                      Ruby lib/irb/easter-egg.rb</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true"></a><span class="co">#&gt; 11                                 Venice test brings up floodgates for first time</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true"></a><span class="co">#&gt; 12               Scientists say you can cancel the noise but keep your window open</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true"></a><span class="co">#&gt; 13                                  The illusion of control, and how to give it up</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true"></a><span class="co">#&gt; 14                                      Reflections on Trusting Trust (1984) [pdf]</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true"></a><span class="co">#&gt; 15                                               Linux kernel in-tree Rust support</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true"></a><span class="co">#&gt; 16                    PG: The biggest source of stress for me at YC was running HN</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true"></a><span class="co">#&gt; 17                  Build a No-Slot MIDI Interface on the Apple ][ Game I/O Socket</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true"></a><span class="co">#&gt; 18                                                  Epigrams on Programming (1982)</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true"></a><span class="co">#&gt; 19                                                        How to Understand Things</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true"></a><span class="co">#&gt; 20                                              Make Your Own ColecoVision at Home</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true"></a><span class="co">#&gt; 21                    Ask HN: What&#39;s the worst piece of software you use everyday?</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true"></a><span class="co">#&gt; 22  Show HN: HN Demetricator – An extension that removes upvote and comment counts</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true"></a><span class="co">#&gt; 23                                                    Soup.io Will Be Discontinued</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true"></a><span class="co">#&gt; 24                                    Tracking Pico Balloons Using Ham Radio [pdf]</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true"></a><span class="co">#&gt; 25                                 Porting a Wolfenstein-type engine to the MEGA65</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true"></a><span class="co">#&gt; 26                            Linus Torvalds: “I Hope AVX512 Dies a Painful Death”</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true"></a><span class="co">#&gt; 27                                                   CRDTs: The Hard Parts [video]</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true"></a><span class="co">#&gt; 28                                            Migrating Away from Google Analytics</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true"></a><span class="co">#&gt; 29                                How much your computer can do in a second (2015)</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true"></a><span class="co">#&gt; 30                                          Announcing The Zig Software Foundation</span></span></code></pre></div>
+<p>The second function <code>get_headlines</code> is a helper function
+that returns a tibble of just the headlines, instead of the full rss
+feed.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adding a small time delay to avoid simultaneous posts to the API</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.sleep</span>(<span class="dv">3</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">get_headlines</span>(<span class="at">website =</span> <span class="st">&quot;ycombinator.com&quot;</span>, <span class="at">rss_table =</span> package_rss)</span></code></pre></div>
 </div>
 <div id="describe_url" class="section level3">
 <h3>describe_url()</h3>
-<p>Because some website have multiple feeds divided by topics, <code>describe_url(website)</code> can be helpful to see the topics of a given website.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">describe_url</span>(<span class="st">&quot;bbc.com&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="co">#&gt; Topics available for website bbc.com are: business, news, science, travel.</span></span></code></pre></div>
+<p>Because some website have multiple feeds divided by topics,
+<code>describe_url(website)</code> can be helpful to see the topics of a
+given website.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe_url</span>(<span class="st">&quot;bbc.com&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Topics available for website bbc.com: business, news, science, travel.</span></span></code></pre></div>
 </div>
 <div id="filter_urls" class="section level3">
 <h3>filter_urls()</h3>
-<p>Finally, <code>filter_urls(topic, country, language )</code> can be used to browse the dataset by topic, country, or language.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">filter_urls</span>(<span class="dt">topic =</span> <span class="st">&quot;tech&quot;</span>, <span class="dt">country =</span> <span class="st">&quot;IT&quot;</span>, <span class="dt">language =</span> <span class="st">&quot;it&quot;</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="co">#&gt; # A tibble: 5 x 7</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="co">#&gt;   clean_url  language topic_unified main  clean_country rss_url       GlobalRank</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;     </span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="co">#&gt; 1 repubblic… it       tech          None  IT            http://www.r… 1086      </span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="co">#&gt; 2 lastampa.… it       tech          None  IT            http://www.l… 2413      </span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="co">#&gt; 3 ilsole24o… it       tech          None  IT            http://nova.… 2681      </span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="co">#&gt; 4 corriere.… it       tech          None  IT            http://www.c… 1328      </span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="co">#&gt; 5 ansa.it    it       tech          None  IT            http://www.a… 2248</span></span></code></pre></div>
+<p>Finally, <code>filter_urls(topic, country, language )</code> can be
+used to browse the dataset by topic, country, or language.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter_urls</span>(<span class="at">topic =</span> <span class="st">&quot;tech&quot;</span>, <span class="at">country =</span> <span class="st">&quot;IT&quot;</span>, <span class="at">language =</span> <span class="st">&quot;it&quot;</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 5 × 7</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   clean_url       language topic_unified main  clean_country rss_url  GlobalRank</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;     </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 repubblica.it   it       tech          None  IT            http://… 1086      </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 lastampa.it     it       tech          None  IT            http://… 2413      </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 ilsole24ore.com it       tech          None  IT            http://… 2681      </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 corriere.it     it       tech          None  IT            http://… 1328      </span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 ansa.it         it       tech          None  IT            http://… 2248</span></span></code></pre></div>
 </div>
 </div>
 <div id="use-case" class="section level2">
 <h2>Use case</h2>
-<p>This package can be convenient if you need to fetch news from various websites for further analysis and you don’t want to search manually for the URL of their RSS feeds.</p>
+<p>This package can be convenient if you need to fetch news from various
+websites for further analysis and you don’t want to search manually for
+the URL of their RSS feeds.</p>
 <p>Assuming we have the news sites we want to follow:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>sites =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;bbc.com&quot;</span>, <span class="st">&quot;spiegel.de&quot;</span>, <span class="st">&quot;washingtonpost.com&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sites <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;bbc.com&quot;</span>, <span class="st">&quot;spiegel.de&quot;</span>, <span class="st">&quot;washingtonpost.com&quot;</span>)</span></code></pre></div>
 <p>We can get a list of data frames with:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">lapply</span>(sites, get_news)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(sites, get_news)</span></code></pre></div>
 </div>
 
 
