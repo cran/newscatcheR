@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -8,12 +8,12 @@ knitr::opts_chunk$set(
 library(newscatcheR)
 library(tidyRSS)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # adding a small time delay to avoid simultaneous posts to the API
 #  Sys.sleep(3)
 #  get_news(website = "ycombinator.com", rss_table = package_rss)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # adding a small time delay to avoid simultaneous posts to the API
 #  Sys.sleep(3)
 #  get_headlines(website = "ycombinator.com", rss_table = package_rss)
@@ -24,9 +24,9 @@ describe_url("bbc.com")
 ## ----example_4----------------------------------------------------------------
 filter_urls(topic = "tech", country = "IT", language = "it")
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  sites = c("bbc.com", "spiegel.de", "washingtonpost.com")
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  lapply(sites, get_news)
 

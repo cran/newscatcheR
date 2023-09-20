@@ -1,7 +1,7 @@
 Package: newscatcheR
 Title: Programmatically Collect Normalized News from (Almost) Any
         Website
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
     c(person(given = "Novica",
              family = "Nakov",
@@ -29,14 +29,14 @@ Suggests: knitr, rmarkdown, testthat
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Language: en-US
 NeedsCompilation: no
-Packaged: 2022-04-29 12:48:29 UTC; novica
+Packaged: 2023-09-20 10:22:29 UTC; VI2451
 Author: Novica Nakov [aut, cre],
   Teofil Nakov [ctb],
   Artem Bugara [ctb],
   Discindo [cph]
 Maintainer: Novica Nakov <nnovica@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-04-29 22:50:08 UTC
+Date/Publication: 2023-09-20 10:40:02 UTC
