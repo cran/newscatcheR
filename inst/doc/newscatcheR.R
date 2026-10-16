@@ -1,32 +1,41 @@
-## ----include = FALSE----------------------------------------------------------
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-
-## ----preliminaries, echo=FALSE, message=FALSE---------------------------------
+## -----------------------------------------------------------------------------
+#| label: preliminaries
+#| echo: false
+#| message: false
 library(newscatcheR)
 library(tidyRSS)
 
-## ----eval = FALSE-------------------------------------------------------------
-#  # adding a small time delay to avoid simultaneous posts to the API
-#  Sys.sleep(3)
-#  get_news(website = "ycombinator.com", rss_table = package_rss)
 
-## ----eval = FALSE-------------------------------------------------------------
-#  # adding a small time delay to avoid simultaneous posts to the API
-#  Sys.sleep(3)
-#  get_headlines(website = "ycombinator.com", rss_table = package_rss)
+## -----------------------------------------------------------------------------
+#| eval: false
+# # adding a small time delay to avoid simultaneous posts to the API
+# Sys.sleep(3)
+# get_news(website = "ycombinator.com", rss_table = package_rss)
 
-## ----example_3----------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| eval: false
+# # adding a small time delay to avoid simultaneous posts to the API
+# Sys.sleep(3)
+# get_headlines(website = "ycombinator.com", rss_table = package_rss)
+
+
+## -----------------------------------------------------------------------------
+#| label: example-3
 describe_url("bbc.com")
 
-## ----example_4----------------------------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| label: example-4
 filter_urls(topic = "tech", country = "IT", language = "it")
 
-## ----eval = FALSE-------------------------------------------------------------
-#  sites = c("bbc.com", "spiegel.de", "washingtonpost.com")
 
-## ----eval = FALSE-------------------------------------------------------------
-#  lapply(sites, get_news)
+## -----------------------------------------------------------------------------
+#| eval: false
+# sites = c("bbc.com", "spiegel.de", "washingtonpost.com")
+
+
+## -----------------------------------------------------------------------------
+#| eval: false
+# lapply(sites, get_news)
 
